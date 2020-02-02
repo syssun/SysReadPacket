@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="inputView">
+        <attr name="input_icon" format="reference"></attr>
+        <attr name="input_hit" format="string"></attr>
+        <attr name="input_pass" format="boolean"></attr>
+    </declare-styleable>
+
+    <attr name="titleText" format="string" />
+    <attr name="titleColor" format="color" />
+    <attr name="titleTextSize" format="dimension" />
+
+    <declare-styleable name="RandomValidateCode">
+        <attr name="titleText" />
+        <attr name="titleColor" />
+        <attr name="titleTextSize" />
+    </declare-styleable>
+
+
+</resources>

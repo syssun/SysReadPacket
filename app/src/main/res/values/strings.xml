@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">红包神器</string>
+    <string name="title_home">首页</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">我的</string>
+    <string name="accessibility_desc">抢红包神器，帮你快速抢红包，解放双手，享受快人一块！</string>
+
+    <string name="open_red_packet">红包</string>
+    <string name="open_red_packet_mm">微信红包</string>
+    <string name="red_packet_have_opened">派完了</string>
+    <string name="red_packet_expired">已过期</string>
+    <string name="notification_default_keyword">红包]</string>
+
+    <string name="sys_btnid_notes">对应版本BTNID填写请参考:https://www.cnblogs.com/syscn/p/12249913.html (也可在这里反馈问题哦！)</string>
+
+    <string-array name="delayTimes">
+        <item>不延迟</item>
+        <item>200毫秒</item>
+        <item>400毫秒</item>
+        <item>600毫秒</item>
+        <item>2000毫秒</item>
+    </string-array>
+    <string-array name="delayTimesValue">
+        <item>0</item>
+        <item>200</item>
+        <item>400</item>
+        <item>600</item>
+        <item>2000</item>
+    </string-array>
+
+
+
+
+
+</resources>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activitys.LoginActivity">
+    <include layout="@layout/nav_bar"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/logo"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/marginSize"
+        />
+    <com.sys.readh.views.InputView
+        android:id="@+id/userphone"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/marginSize"
+        android:layout_height="@dimen/input_height"
+        app:input_icon="@mipmap/userh"
+        app:input_hit="请输入手机号"
+        app:input_pass="false"/>
+    <View style="@style/line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/marginSize"
+        android:layout_height="@dimen/input_height">
+        <com.sys.readh.views.InputView
+            android:id="@+id/usercode"
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:layout_height="match_parent"
+            app:input_icon="@mipmap/password"
+            app:input_hit="请输入右侧验证码"
+            app:input_pass="false"/>
+        <com.sys.readh.views.RandomValidateCode
+            android:id="@+id/id_validate_code"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            app:titleColor="#ff0000"
+            app:titleText="1234"
+            app:titleTextSize="20sp" />
+    </LinearLayout>
+
+    <View style="@style/line"/>
+
+    <Button
+        style="@style/btnCommit"
+        android:id="@+id/loginbtn"
+        android:text="登录"
+        android:textSize="@dimen/navTextSize"
+        android:onClick="onClick"/>
+
+</LinearLayout>

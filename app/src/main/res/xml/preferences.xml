@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="选项设置">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="sys_seting_autoclose"
+            android:title="拆完红包返回聊天页面" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="说明">
+        <Preference
+            android:summary="该版本已适配企业微信版本: 3.0 ,微信版本 7.0 \n可到 [我的] 中查看相关版本"
+            android:title="" />
+    </PreferenceCategory>
+</PreferenceScreen>

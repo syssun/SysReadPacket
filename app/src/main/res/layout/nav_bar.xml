@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingLeft="@dimen/marginSize"
+    android:paddingRight="@dimen/marginSize"
+    android:background="@color/colorPrimaryDark"
+    android:layout_height="?attr/actionBarSize">
+
+    <ImageView
+        android:id="@+id/nav_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/fanhui"
+
+        android:layout_gravity="center|left"
+        />
+
+    <TextView
+        android:id="@+id/nav_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text=""
+        android:textSize="@dimen/navTextSize"
+        />
+    <ImageView
+        android:id="@+id/nav_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|right"
+        android:src="@mipmap/user"
+        android:background="@drawable/btn_commit_select"
+        />
+</FrameLayout>

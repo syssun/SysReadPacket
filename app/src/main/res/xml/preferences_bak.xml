@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="选项设置">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="sys_seting_autoclick"
+            android:title="自动点击红包消息" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="sys_seting_autoopen"
+            android:title="自动拆开红包" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="sys_seting_autoclose"
+            android:title="拆完返回聊天页面" />
+        <ListPreference
+            android:entries="@array/delayTimes"
+            android:entryValues="@array/delayTimesValue"
+            android:key="sys_seting_delay"
+            android:defaultValue="0"
+            android:title="延时拆开红包">
+        </ListPreference>
+        <EditTextPreference
+            android:defaultValue="拼手气红包;红包"
+            android:key="sys_seting_notkey"
+            android:title="设置通知关键词,逗号;分隔" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="说明">
+        <Preference
+            android:summary="该版本已适配企业微信版本: 3.0 ,微信版本 7.0 \n可到 [我的] 中查看相关版本"
+            android:title="" />
+    </PreferenceCategory>
+</PreferenceScreen>
