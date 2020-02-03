@@ -288,6 +288,4 @@ public class SysReadAccessibilityService extends AccessibilityService {
         }
         return "";
     }
-//com.tencent.wework:id/dvx  3.0.4
-
 }

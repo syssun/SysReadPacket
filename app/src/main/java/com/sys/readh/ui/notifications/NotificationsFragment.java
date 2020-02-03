@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,23 +12,16 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.sys.readh.R;
 import com.sys.readh.activitys.LoginActivity;
-import com.sys.readh.activitys.SettingFragment;
 import com.sys.readh.adapter.InfoGridAdapter;
 import com.sys.readh.adapter.items.InfoGrid;
 import com.sys.readh.utils.AppUtils;
-import com.sys.readh.utils.LogUtil;
-
 import java.util.ArrayList;
 
 public class NotificationsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener{
@@ -133,8 +125,4 @@ public class NotificationsFragment extends Fragment implements CompoundButton.On
         onCreate(null);
     }
 
-
-    public void textClick(View view){
-
-    }
 }

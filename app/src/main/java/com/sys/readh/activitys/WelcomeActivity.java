@@ -15,7 +15,6 @@ import androidx.annotation.Nullable;
 import com.sys.readh.MainActivity;
 import com.sys.readh.R;
 import com.sys.readh.utils.AppUtils;
-import com.sys.readh.utils.LogUtil;
 
 import java.util.Timer;
 import java.util.TimerTask;
