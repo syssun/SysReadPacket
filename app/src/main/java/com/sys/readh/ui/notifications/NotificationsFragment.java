@@ -73,6 +73,8 @@ public class NotificationsFragment extends Fragment implements CompoundButton.On
         });
         mycheck = root.findViewById(R.id.mycheck);
         mycheck.setOnCheckedChangeListener(this);
+        boolean ischeck = sharedPreferences.getBoolean("sys_seting_autoclose",false);
+        mycheck.setChecked(ischeck);
 
         button = root.findViewById(R.id.Logoutbtn);
         if(!sys_userphone.isEmpty()){
@@ -118,11 +120,6 @@ public class NotificationsFragment extends Fragment implements CompoundButton.On
             editor.putBoolean("sys_seting_autoclose",false);
         }
         editor.commit();
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-        onCreate(null);
     }
 
 }

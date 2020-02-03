@@ -29,7 +29,7 @@ public class SysReadAccessibilityService extends AccessibilityService {
     private static final String package_wework = "com.tencent.wework";
     private static final String package_mm = "com.tencent.mm";
     private static final String keywordArray[] = {"红包]", "拼手气红包", "拼手气红包]", "红包"};
-    private static final String h = "已领取"; //去掉过滤的红包
+    private static final String h[] = {"已领取","已被领完"}; //去掉过滤的红包
     //企业微信
     //聊天界面
     private static final String WMessageList = "com.tencent.wework.msg.controller.MessageListActivity";
@@ -253,7 +253,7 @@ public class SysReadAccessibilityService extends AccessibilityService {
         return defaultValue;
     }
 
-    public boolean bl(AccessibilityNodeInfo nodeParent, String h) {
+    public boolean bl(AccessibilityNodeInfo nodeParent, String h[]) {
         //遍历节点
         //红包已领取
         LogUtil.d("nodeParent:" + nodeParent.toString());
@@ -264,7 +264,7 @@ public class SysReadAccessibilityService extends AccessibilityService {
             } else {
                 if (childenode.getText() != null) {
                     LogUtil.d(childenode.getText().toString());
-                    if (h.equals(childenode.getText().toString())) {
+                    if (Arrays.asList(h).contains(childenode.getText().toString())) {
                         f = true;
                         break;
                     }

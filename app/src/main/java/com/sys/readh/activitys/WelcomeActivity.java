@@ -37,7 +37,8 @@ public class WelcomeActivity extends Activity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("sys_version_mm", AppUtils.getMMVersion(this.getApplicationContext()));
             editor.putString("sys_version_wework", AppUtils.getWeWorkVersion(this.getApplicationContext()));
-            editor.putBoolean("sys_seting_autoclose", true);
+            boolean f = sharedPreferences.getBoolean("sys_seting_autoclose",false);
+            editor.putBoolean("sys_seting_autoclose", f);
             editor.commit();
         }
     }

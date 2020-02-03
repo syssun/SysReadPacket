@@ -44,13 +44,16 @@ public class SysNotificationListenerService extends NotificationListenerService 
         super.onNotificationPosted(sbn);
         String packageName = sbn.getPackageName();
         Notification notification = sbn.getNotification();
+        LogUtil.d("sbn:"+sbn.toString());
+        LogUtil.d("notification:"+notification.toString());
         //企业微信 ，微信
         if("com.tencent.wework".equals(packageName) || "com.tencent.mm".equals(packageName)){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 final Bundle extras = notification.extras;
                 CharSequence notificationExtraText = extras.getCharSequence(Notification.EXTRA_TEXT);
                 final String str = "" + notificationExtraText;
-                String keywords = sharedPreferences.getString("sys_notification_keyword", "红包");
+                LogUtil.d("notification str:"+str);
+                String keywords ="拼手气红包;红包];红包";
                 String[] keywordArray = keywords.split(";");
                 for(String keyword : keywordArray){
                     if(keyword != null && keyword.length() > 0){

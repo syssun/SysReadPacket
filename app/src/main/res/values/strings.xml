@@ -5,6 +5,7 @@
     <string name="title_notifications">我的</string>
     <string name="accessibility_desc">抢红包神器，帮你快速抢红包，解放双手，享受快人一块！</string>
 
+    <string name="sys_notification_keyword">红包</string>
     <string name="open_red_packet">红包</string>
     <string name="open_red_packet_mm">微信红包</string>
     <string name="red_packet_have_opened">派完了</string>
