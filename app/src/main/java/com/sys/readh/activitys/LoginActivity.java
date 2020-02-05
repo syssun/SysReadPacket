@@ -45,7 +45,7 @@ public class LoginActivity extends BaseActivity {
             Toast.makeText(this,"请输入手机号",Toast.LENGTH_SHORT).show();
             return ;
         }
-        if("sys123".equals(userphonestr)){
+        if("sys123".equals(userphonestr)){ //不需要校验的用户
             ccomit(userphonestr);
             return ;
         }
