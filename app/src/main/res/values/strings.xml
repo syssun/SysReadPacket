@@ -12,7 +12,7 @@
     <string name="red_packet_expired">已过期</string>
     <string name="notification_default_keyword">红包]</string>
 
-    <string name="sys_btnid_notes">对应版本BTNID填写请参考:https://www.cnblogs.com/syscn/p/12249913.html (也可在这里反馈问题哦！)</string>
+    <string name="sys_btnid_notes">对应版本BTNID填写请参考:<u>https://www.cnblogs.com/syscn/p/12249913.html</u> (也可在这里反馈问题哦！)</string>
 
     <string-array name="delayTimes">
         <item>不延迟</item>

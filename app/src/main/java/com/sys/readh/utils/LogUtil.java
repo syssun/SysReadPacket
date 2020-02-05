@@ -24,6 +24,6 @@ public class LogUtil {
         d(myTag, message);
     }
     public static void e(String message,Throwable e){
-        e(myTag, message,e);
+        e(myETag, message,e);
     }
 }

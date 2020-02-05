@@ -8,10 +8,28 @@ android {
         minSdkVersion 15
         targetSdkVersion 29
         versionCode 1
-        versionName "v1.0"
+        versionName "1.0.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release {
+            storeFile file("E:\\java\\android\\keys\\sys_key.jks")
+            storePassword "sys887799"
+            keyAlias "sys_key"
+            keyPassword "sys887799"
+        }
+    }
     buildTypes {
+        debug {
+            //是否混淆
+            minifyEnabled false
+            //是否压缩代码
+            zipAlignEnabled false
+            //移除无用的资源
+            shrinkResources false
+            // 签名配置
+            signingConfig signingConfigs.release
+        }
         release {
             //是否混淆
             minifyEnabled true
@@ -19,7 +37,14 @@ android {
             zipAlignEnabled true
             //移除无用的资源
             shrinkResources false
+            // 签名配置
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "readh_v${defaultConfig.versionName}.apk";
         }
     }
 }

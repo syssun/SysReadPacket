@@ -1,7 +1,9 @@
 package com.sys.readh.ui.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -22,8 +25,11 @@ import com.sys.readh.R;
 import com.sys.readh.adapter.HomeAdapter;
 import com.sys.readh.adapter.items.HomeGrid;
 import com.sys.readh.loader.GlideImageLoader;
+import com.sys.readh.utils.AppUtils;
 import com.sys.readh.utils.LogUtil;
+import com.sys.readh.utils.StringUtil;
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 
@@ -38,10 +44,12 @@ public class HomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         images = new ArrayList<Integer>();
-        images.add(R.mipmap.banner_one);
-        images.add(R.mipmap.banner_two);
-        images.add(R.mipmap.banner_three);
-        images.add(R.mipmap.banner_four);
+        images.add(R.mipmap.tb_wazi);
+        images.add(R.mipmap.tb_kuzi);
+        images.add(R.mipmap.tb_wx);
+        images.add(R.mipmap.tb_zj);
+        images.add(R.mipmap.tb_jiaorouji);
+
         sharedPreferences = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
     }
 
@@ -78,7 +86,42 @@ public class HomeFragment extends Fragment {
         banner.setDelayTime(4000);
         //banner设置方法全部调用完毕时最后调用
         banner.start();
-
+        banner.setOnBannerListener(new OnBannerListener() { //banner 点击事件
+            @Override
+            public void OnBannerClick(int position) {
+                LogUtil.d(position+"");
+                try {
+                    switch (position){
+                        case 0:
+                            AppUtils.copyText(getActivity(), StringUtil.tb_wazi);
+                            break;
+                        case 1:
+                            AppUtils.copyText(getActivity(), StringUtil.tb_kuzi);
+                            break;
+                        case 2:
+                            AppUtils.copyText(getActivity(), StringUtil.tb_wx);
+                            break;
+                        case 3:
+                            AppUtils.copyText(getActivity(), StringUtil.tb_zj);
+                            break;
+                        case 4:
+                            AppUtils.copyText(getActivity(), StringUtil.tb_jiaorouji);
+                            break;
+                    }
+                    if(!AppUtils.isAppInstalled(getActivity(),"com.taobao.taobao")){
+                        Toast.makeText(getActivity(),"手机没有安装淘宝客户端！",Toast.LENGTH_SHORT).show();
+                        return ;
+                    }
+                    //跳转到淘宝
+                    Intent intent  = getContext().getPackageManager().getLaunchIntentForPackage("com.taobao.taobao"); //这行代
+                    intent.setAction("android.intent.action.VIEW");
+                    getContext().startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    LogUtil.e("淘宝",e);
+                }
+            }
+        });
 
     }
 
@@ -88,7 +131,7 @@ public class HomeFragment extends Fragment {
         super.onStart();
         //开始轮播
         banner.startAutoPlay();
-        boolean f = checkStealFeature1("com.sys.readh/com.sys.readh.services.SysReadAccessibilityService");
+        boolean f = AppUtils.checkStealFeature1(getContext(),"com.sys.readh/com.sys.readh.services.SysReadAccessibilityService");
         if(f){
             t1.setText("红包监听已开启...");
         }else{
@@ -102,27 +145,5 @@ public class HomeFragment extends Fragment {
         //结束轮播
         banner.stopAutoPlay();
     }
-    private boolean checkStealFeature1(String service) {
-        int ok = 0;
-        LogUtil.d("ok:"+ok);
-        try {
-            ok = Settings.Secure.getInt(getContext().getContentResolver(), Settings.Secure.ACCESSIBILITY_ENABLED);
-        } catch (Settings.SettingNotFoundException e) {
-        }
-        TextUtils.SimpleStringSplitter ms = new TextUtils.SimpleStringSplitter(':');
-        if (ok == 1) {
-            String settingValue = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-            if (settingValue != null) {
-                ms.setString(settingValue);
-                while (ms.hasNext()) {
-                    String accessibilityService = ms.next();
-                    LogUtil.d(accessibilityService);
-                    if (accessibilityService.equalsIgnoreCase(service)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false ;
-    }
+
 }

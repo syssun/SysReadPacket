@@ -30,7 +30,7 @@ public class WelcomeActivity extends Activity {
         sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
         setContentView(R.layout.activity_welcome);
         v = findViewById(R.id.tvversion);
-        v.setText("红包神器" + AppUtils.getVersionName(this.getApplicationContext()));
+        v.setText("红包神器_v" + AppUtils.getVersionName(this.getApplicationContext()));
         init();
 
         if (sharedPreferences != null) {
