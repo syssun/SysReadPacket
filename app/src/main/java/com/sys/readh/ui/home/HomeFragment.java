@@ -27,6 +27,7 @@ import com.sys.readh.adapter.items.HomeGrid;
 import com.sys.readh.loader.GlideImageLoader;
 import com.sys.readh.utils.AppUtils;
 import com.sys.readh.utils.LogUtil;
+import com.sys.readh.utils.SharePerKeys;
 import com.sys.readh.utils.StringUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
@@ -137,10 +138,10 @@ public class HomeFragment extends Fragment {
         }else{
             t1.setText("红包监听已关闭...");
         }
-        t2.setText(sharedPreferences.getString("sys_notificationListener",""));
+        t2.setText(sharedPreferences.getString(SharePerKeys.sys_notificationListener,""));
     }
     @Override
-    public void onStop() {
+    public void onStop() { 
         super.onStop();
         //结束轮播
         banner.stopAutoPlay();

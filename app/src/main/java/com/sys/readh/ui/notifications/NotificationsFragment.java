@@ -22,6 +22,8 @@ import com.sys.readh.activitys.LoginActivity;
 import com.sys.readh.adapter.InfoGridAdapter;
 import com.sys.readh.adapter.items.InfoGrid;
 import com.sys.readh.utils.AppUtils;
+import com.sys.readh.utils.SharePerKeys;
+
 import java.util.ArrayList;
 
 public class NotificationsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener{
@@ -46,16 +48,26 @@ public class NotificationsFragment extends Fragment implements CompoundButton.On
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
         recyclerView = root.findViewById(R.id.r4);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        String sys_userphone = sharedPreferences.getString("sys_userphone","");
+        String sys_userphone = sharedPreferences.getString(SharePerKeys.sys_userphone,"");
         infoGrids.add(new InfoGrid("name","用户",sys_userphone));
         infoGrids.add(new InfoGrid("version","应用版本",AppUtils.getVersionName(this.getContext())));
-        infoGrids.add(new InfoGrid("mm","当前微信",getVersion("sys_version_mm")));
-        infoGrids.add(new InfoGrid("wework","当前企业微信",getVersion("sys_version_wework")));
+        infoGrids.add(new InfoGrid("mm","当前微信",getVersion(SharePerKeys.sys_version_mm)));
+        infoGrids.add(new InfoGrid("wework","当前企业微信",getVersion(SharePerKeys.sys_version_wework)));
 
-        String mmbtnid = sharedPreferences.getString("sys_mmbtnid","");
-        String weworkbtnid = sharedPreferences.getString("sys_weworkbtnid","");
+        String mmbtnid = sharedPreferences.getString(SharePerKeys.sys_mmbtnid,"");
+        String weworkbtnid = sharedPreferences.getString(SharePerKeys.sys_weworkbtnid,"");
+        int sys_delay_ms = sharedPreferences.getInt(SharePerKeys.sys_delay_open,0);
         infoGrids.add(new InfoGrid("mmbtnid","微信BTNID",mmbtnid,true));
         infoGrids.add(new InfoGrid("weworkbtnid","企业微信BTNID",weworkbtnid,true));
+        infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
+        infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
+        infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
+        infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
+        infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
+        infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
+        infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
+        infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
+        infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
 
         infoGridAdapter = new InfoGridAdapter(getActivity(),infoGrids);
         recyclerView.setAdapter(infoGridAdapter);
@@ -73,7 +85,7 @@ public class NotificationsFragment extends Fragment implements CompoundButton.On
         });
         mycheck = root.findViewById(R.id.mycheck);
         mycheck.setOnCheckedChangeListener(this);
-        boolean ischeck = sharedPreferences.getBoolean("sys_seting_autoclose",false);
+        boolean ischeck = sharedPreferences.getBoolean(SharePerKeys.sys_seting_autoclose,false);
         mycheck.setChecked(ischeck);
 
         button = root.findViewById(R.id.Logoutbtn);
@@ -92,7 +104,7 @@ public class NotificationsFragment extends Fragment implements CompoundButton.On
     }
     public void logout(){
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove("sys_userphone");
+        editor.remove(SharePerKeys.sys_userphone);
         editor.commit();
         Intent intent = new Intent(context, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -101,9 +113,9 @@ public class NotificationsFragment extends Fragment implements CompoundButton.On
     private String getVersion(String key){
         String a = "" ;
         if("".equals(sharedPreferences.getString(key,""))){
-            if("sys_version_wework".equals(key))
+            if(SharePerKeys.sys_version_wework.equals(key))
                 a = AppUtils.getWeWorkVersion(this.getContext());
-            else  if("sys_version_mm".equals(key))
+            else  if(SharePerKeys.sys_version_mm.equals(key))
                 a = AppUtils.getMMVersion(this.getContext());
         }else{
             a = sharedPreferences.getString(key,"");
@@ -115,9 +127,9 @@ public class NotificationsFragment extends Fragment implements CompoundButton.On
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if(isChecked){
-            editor.putBoolean("sys_seting_autoclose",true);
+            editor.putBoolean(SharePerKeys.sys_seting_autoclose,true);
         }else{
-            editor.putBoolean("sys_seting_autoclose",false);
+            editor.putBoolean(SharePerKeys.sys_seting_autoclose,false);
         }
         editor.commit();
     }

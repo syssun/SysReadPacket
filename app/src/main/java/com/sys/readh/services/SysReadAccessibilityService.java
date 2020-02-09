@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.accessibility.AccessibilityEvent;
@@ -16,7 +17,9 @@ import androidx.annotation.RequiresApi;
 import com.sys.readh.R;
 import com.sys.readh.utils.AppUtils;
 import com.sys.readh.utils.LogUtil;
+import com.sys.readh.utils.SharePerKeys;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,7 +32,7 @@ public class SysReadAccessibilityService extends AccessibilityService {
     private static final String package_wework = "com.tencent.wework";
     private static final String package_mm = "com.tencent.mm";
     private static final String keywordArray[] = {"红包]", "拼手气红包", "拼手气红包]", "红包"};
-    private static final String h[] = {"已领取","已被领完"}; //去掉过滤的红包
+    private static final String h[] = {"已领取", "已被领完"}; //去掉过滤的红包
     //企业微信
     //聊天界面
     private static final String WMessageList = "com.tencent.wework.msg.controller.MessageListActivity";
@@ -94,7 +97,7 @@ public class SysReadAccessibilityService extends AccessibilityService {
                 queryReadPacket(packagename); //查找 // 消息列表  去掉支付界面
                 return;
             } else if (MRedEnvelopeDetail.equals(currentActivity)) {
-                if (getSharedPreferences("sys_seting_autoclose", true)) {
+                if (getSharedPreferencesBoolean(SharePerKeys.sys_seting_autoclose, true)) {
                     closeReadDetail(); // 关闭红包详情页面
                 }
             }
@@ -117,7 +120,7 @@ public class SysReadAccessibilityService extends AccessibilityService {
                 queryReadPacket(packagename); //查找
                 return;
             } else if (WRedEnvelopeDetail.equals(currentActivity)) {
-                if (getSharedPreferences("sys_seting_autoclose", true)) {
+                if (getSharedPreferencesBoolean(SharePerKeys.sys_seting_autoclose, true)) {
                     closeReadDetail(); // 关闭红包详情页面
                 }
             }
@@ -185,7 +188,7 @@ public class SysReadAccessibilityService extends AccessibilityService {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    private void openReadPacket(String packagename) {
+    private void openReadPacket(final String packagename) {
         final AccessibilityNodeInfo nodeInfo = getRootInActiveWindow();
         if (nodeInfo != null) {
             String haveBeenOpened = getResources().getString(R.string.red_packet_have_opened); // 手慢了，红包派完了
@@ -197,25 +200,31 @@ public class SysReadAccessibilityService extends AccessibilityService {
             // 判断红包是否已抢完，如已经抢完则自动关闭抢红包页面，如没有抢完则自动抢红包
             if (resultList.size() > 0 || resultList2.size() > 0) { // 红包已抢完
                 LogUtil.d("红包已抢完或已失效");
-                if (!getSharedPreferences("sys_seting_autoclose", true)) {
+                if (!getSharedPreferencesBoolean(SharePerKeys.sys_seting_autoclose, true)) {
                     return;
                 }
                 performGlobalAction(GLOBAL_ACTION_BACK); // 模拟按返回键
             } else {
-                String viewId = getOpenBtnIdWithPack(packagename); // 获取已安装版本企业微信红包开按钮的Id
-                if (!TextUtils.isEmpty(viewId)) {
-                    List<AccessibilityNodeInfo> list = null;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                        list = nodeInfo.findAccessibilityNodeInfosByViewId(viewId);
-                    }
-                    nodeInfo.recycle();
-                    for (AccessibilityNodeInfo item : list) {
-                        if (item.isClickable()) {
-                            item.performAction(AccessibilityNodeInfo.ACTION_CLICK); //点击
-                            break;
+                int delayMs = getSharedPreferencesInteger(SharePerKeys.sys_delay_open, 0);
+                new Handler().postDelayed(new Runnable() { //延迟执行
+                    @Override
+                    public void run() {
+                        String viewId = getOpenBtnIdWithPack(packagename); // 获取已安装版本企业微信红包开按钮的Id
+                        if (!TextUtils.isEmpty(viewId)) {
+                            List<AccessibilityNodeInfo> list = new ArrayList<>();
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                                list = nodeInfo.findAccessibilityNodeInfosByViewId(viewId);
+                            }
+                            nodeInfo.recycle();
+                            for (AccessibilityNodeInfo item : list) {
+                                if (item.isClickable()) {
+                                    item.performAction(AccessibilityNodeInfo.ACTION_CLICK); //点击
+                                    break;
+                                }
+                            }
                         }
                     }
-                }
+                }, delayMs);
             }
         }
     }
@@ -245,9 +254,25 @@ public class SysReadAccessibilityService extends AccessibilityService {
         }
     }
 
-    private boolean getSharedPreferences(String key, boolean defaultValue) {
+    private boolean getSharedPreferencesBoolean(String key, boolean defaultValue) {
         if (sharedPreferences != null) {
             boolean value = sharedPreferences.getBoolean(key, defaultValue);
+            return value;
+        }
+        return defaultValue;
+    }
+
+    private String getSharedPreferencesStr(String key, String defaultValue) {
+        if (sharedPreferences != null) {
+            String value = sharedPreferences.getString(key, defaultValue);
+            return value;
+        }
+        return defaultValue;
+    }
+
+    private Integer getSharedPreferencesInteger(String key, int defaultValue) {
+        if (sharedPreferences != null) {
+            Integer value = sharedPreferences.getInt(key, defaultValue);
             return value;
         }
         return defaultValue;
@@ -281,10 +306,10 @@ public class SysReadAccessibilityService extends AccessibilityService {
 
     private String getOpenBtnIdWithPack(String packagename) {
         if (package_wework.equals(packagename)) {
-            return sharedPreferences.getString("sys_weworkbtnid", "");
+            return sharedPreferences.getString(SharePerKeys.sys_weworkbtnid, "");
         }
         if (package_mm.equals(packagename)) {
-            return sharedPreferences.getString("sys_mmbtnid", "");
+            return sharedPreferences.getString(SharePerKeys.sys_mmbtnid, "");
         }
         return "";
     }

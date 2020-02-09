@@ -1,6 +1,9 @@
 package com.sys.readh.utils;
 
-public class StringUtil {
+/**
+ * 淘口令
+ */
+public final class StringUtil {
     public static final String tb_wazi = "南极人袜子男冬加厚中筒袜短袜纯棉男袜潮长袜船袜防臭吸汗秋冬季 【包邮】\n" +
             "【在售价】24.80元\n" +
             "【券后价】14.80元\n" +

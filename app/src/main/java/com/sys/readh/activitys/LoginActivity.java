@@ -8,9 +8,11 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.sys.readh.MainActivity;
 import com.sys.readh.R;
+import com.sys.readh.utils.AppAcount;
 import com.sys.readh.utils.CodeUtils;
 import com.sys.readh.utils.LogUtil;
 import com.sys.readh.utils.RegexUtils;
+import com.sys.readh.utils.SharePerKeys;
 import com.sys.readh.views.InputView;
 import com.sys.readh.views.RandomValidateCode;
 
@@ -45,7 +47,7 @@ public class LoginActivity extends BaseActivity {
             Toast.makeText(this,"请输入手机号",Toast.LENGTH_SHORT).show();
             return ;
         }
-        if("sys123".equals(userphonestr)){ //不需要校验的用户
+        if(AppAcount.username_admin.equals(userphonestr)){ //不需要校验的用户
             ccomit(userphonestr);
             return ;
         }
@@ -68,7 +70,7 @@ public class LoginActivity extends BaseActivity {
     private void ccomit(String userphonestr){
         //将用户名保存到缓存
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("sys_userphone",userphonestr);
+        editor.putString(SharePerKeys.sys_userphone,userphonestr);
         editor.commit();
         button.setClickable(false);
         Intent intent = new Intent(this, MainActivity.class);

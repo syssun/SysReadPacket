@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sys.readh.R;
 import com.sys.readh.activitys.SettingsActivity;
 import com.sys.readh.adapter.items.HomeGrid;
+import com.sys.readh.utils.SharePerKeys;
 
 import java.util.ArrayList;
 
@@ -67,8 +68,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                         break ;
                     case "jianting" :
                         //判断btnid 是否填写
-                        String mmbtnid = sharedPreferences.getString("sys_mmbtnid","");
-                        String weworkbtnid = sharedPreferences.getString("sys_weworkbtnid","");
+                        String mmbtnid = sharedPreferences.getString(SharePerKeys.sys_mmbtnid,"");
+                        String weworkbtnid = sharedPreferences.getString(SharePerKeys.sys_weworkbtnid,"");
                         if("".equals(mmbtnid) && "".equals(weworkbtnid)){
                             Toast.makeText(context,"请在【我的】中正确填写BTNID",Toast.LENGTH_LONG).show();
                             break;

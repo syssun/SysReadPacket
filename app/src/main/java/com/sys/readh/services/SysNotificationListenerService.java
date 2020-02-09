@@ -11,6 +11,7 @@ import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import androidx.annotation.RequiresApi;
 import com.sys.readh.utils.LogUtil;
+import com.sys.readh.utils.SharePerKeys;
 
 /**
  * 打开通知
@@ -26,7 +27,7 @@ public class SysNotificationListenerService extends NotificationListenerService 
         super.onListenerConnected();
         sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("sys_notificationListener","通知已开启...");
+        editor.putString(SharePerKeys.sys_notificationListener,"通知已开启...");
         editor.commit();
         LogUtil.d("通知已开启...");
     }
@@ -35,7 +36,7 @@ public class SysNotificationListenerService extends NotificationListenerService 
         super.onListenerDisconnected();
         sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("sys_notificationListener","通知已断开...");
+        editor.putString(SharePerKeys.sys_notificationListener,"通知已断开...");
         editor.commit();
         LogUtil.d("通知已断开...");
     }

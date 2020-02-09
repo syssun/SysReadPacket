@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import com.sys.readh.MainActivity;
 import com.sys.readh.R;
 import com.sys.readh.utils.AppUtils;
+import com.sys.readh.utils.SharePerKeys;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,10 +36,10 @@ public class WelcomeActivity extends Activity {
 
         if (sharedPreferences != null) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("sys_version_mm", AppUtils.getMMVersion(this.getApplicationContext()));
-            editor.putString("sys_version_wework", AppUtils.getWeWorkVersion(this.getApplicationContext()));
-            boolean f = sharedPreferences.getBoolean("sys_seting_autoclose",false);
-            editor.putBoolean("sys_seting_autoclose", f);
+            editor.putString(SharePerKeys.sys_version_mm, AppUtils.getMMVersion(this.getApplicationContext()));
+            editor.putString(SharePerKeys.sys_version_wework, AppUtils.getWeWorkVersion(this.getApplicationContext()));
+            boolean f = sharedPreferences.getBoolean(SharePerKeys.sys_seting_autoclose,false);
+            editor.putBoolean(SharePerKeys.sys_seting_autoclose, f);
             editor.commit();
         }
     }
@@ -61,7 +62,7 @@ public class WelcomeActivity extends Activity {
             @Override
             public void run() {
                 //判断是否已经登录过
-                String sys_userphone = sharedPreferences.getString("sys_userphone", "");
+                String sys_userphone = sharedPreferences.getString(SharePerKeys.sys_userphone, "");
                 if (sys_userphone.isEmpty())
                     toLogin();
                 else
