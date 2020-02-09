@@ -60,14 +60,6 @@ public class NotificationsFragment extends Fragment implements CompoundButton.On
         infoGrids.add(new InfoGrid("mmbtnid","微信BTNID",mmbtnid,true));
         infoGrids.add(new InfoGrid("weworkbtnid","企业微信BTNID",weworkbtnid,true));
         infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
-        infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
-        infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
-        infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
-        infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
-        infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
-        infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
-        infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
-        infoGrids.add(new InfoGrid("sys_delay_open","延迟开红包",sys_delay_ms+"ms",true));
 
         infoGridAdapter = new InfoGridAdapter(getActivity(),infoGrids);
         recyclerView.setAdapter(infoGridAdapter);
