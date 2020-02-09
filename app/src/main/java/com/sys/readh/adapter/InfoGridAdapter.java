@@ -21,8 +21,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sys.readh.MainActivity;
 import com.sys.readh.R;
 import com.sys.readh.activitys.LoginActivity;
+import com.sys.readh.adapter.impls.MyOnClickListener;
 import com.sys.readh.adapter.items.InfoGrid;
 import com.sys.readh.utils.AppUtils;
+import com.sys.readh.utils.LogUtil;
 import com.sys.readh.utils.SharePerKeys;
 
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class InfoGridAdapter extends RecyclerView.Adapter<InfoGridAdapter.ViewHo
     TextView tvlable,tvvalue;
     ImageView imageView;
     ArrayList<InfoGrid> infoGrids;
+    MyOnClickListener myOnClickListener;
     private SharedPreferences sharedPreferences;
     private InfoGridAdapter(){}
     public InfoGridAdapter(Context context, ArrayList<InfoGrid> infoGrids){
@@ -43,7 +46,6 @@ public class InfoGridAdapter extends RecyclerView.Adapter<InfoGridAdapter.ViewHo
     @Override
     public ViewHoler onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         return new InfoGridAdapter.ViewHoler(LayoutInflater.from(context).inflate(R.layout.info_grid,viewGroup,false));
-
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHoler viewHoler, int i) {
@@ -54,56 +56,13 @@ public class InfoGridAdapter extends RecyclerView.Adapter<InfoGridAdapter.ViewHo
             viewHoler.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    switch (infoGrid.getCode()){
-                        case "mmbtnid":
-                            setShare(SharePerKeys.sys_mmbtnid,"请输入微信BTNID",1);
-                            break;
-                        case "weworkbtnid":
-                            setShare(SharePerKeys.sys_weworkbtnid,"请输入企业微信BTNID",1);
-                            break;
-                        case "sys_delay_open":
-                            setShare(SharePerKeys.sys_delay_open,"请输入延迟毫秒数(1s=1000ms)",0);
-                            break;
-                    }
+                    if(myOnClickListener !=null)
+                        myOnClickListener.itemOnclick(v,infoGrid);
                 }
             });
     }
 
-    public void setShare(final String key, String title, final int type){
-        final EditText editText = new EditText(context);
-        if(type==0) {
-            int a = sharedPreferences.getInt(key, 0);
-            editText.setText(a+"");
-            editText.setInputType( InputType.TYPE_CLASS_NUMBER);
-        }else if(type==1) {
-            String inittext = sharedPreferences.getString(key,"");
-            editText.setText(inittext);
-        }
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(title).setView(editText)
-                .setNegativeButton("取消", null);
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                if(type==1)
-                    editor.putString(key,editText.getText().toString());
-                if(type==0) {
-                    String s= editText.getText().toString();
-                    if("".equals(s))
-                        s="0";
-                    int c = Integer.parseInt(s);
-                    if(c>30000){
-                        AppUtils.toastShow(context,"输入的最大值为30000 ！");
-                        return ;
-                    }
-                    editor.putInt(key,c );
-                }
-                editor.commit();
-                toMain();
-            }
-        });
-        builder.show();
-    }
+
     public  void toMain(){
         Intent intent = new Intent(context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -114,7 +73,9 @@ public class InfoGridAdapter extends RecyclerView.Adapter<InfoGridAdapter.ViewHo
     public int getItemCount() {
         return infoGrids.size();
     }
-
+    public void setMyOnClickListener(MyOnClickListener myOnClickListener) {
+        this.myOnClickListener = myOnClickListener;
+    }
     class ViewHoler extends RecyclerView.ViewHolder{
 
         public ViewHoler(@NonNull View itemView) {

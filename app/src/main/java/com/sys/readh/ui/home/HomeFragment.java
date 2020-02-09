@@ -39,8 +39,10 @@ public class HomeFragment extends Fragment {
     ArrayList<Integer> images;
     RecyclerView recyclerView;
     HomeAdapter homeGridAdapter;
-    TextView t1,t2 ;
+    TextView t1, t2;
+    View root;
     private SharedPreferences sharedPreferences;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,31 +52,28 @@ public class HomeFragment extends Fragment {
         images.add(R.mipmap.tb_wx);
         images.add(R.mipmap.tb_zj);
         images.add(R.mipmap.tb_jiaorouji);
-
         sharedPreferences = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.fragment_home, container, false);
+        initView();
+        return root;
+    }
 
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+    void initView() {
         banner = root.findViewById(R.id.banner);
         recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         ArrayList<HomeGrid> homeGrids = new ArrayList<>();
         homeGrids.add(new HomeGrid(R.mipmap.kaqii, "开启监听", "jianting"));
         homeGrids.add(new HomeGrid(R.mipmap.tongzhi, "开启通知", "tongzhi"));
-
         homeGridAdapter = new HomeAdapter(getActivity(), homeGrids);
         recyclerView.setAdapter(homeGridAdapter);
-
-         t1 = root.findViewById(R.id.t1);
-         t2 = root.findViewById(R.id.t2);
-
-
-
-        return root;
+        t1 = root.findViewById(R.id.t1);
+        t2 = root.findViewById(R.id.t2);
     }
 
     @Override
@@ -90,9 +89,9 @@ public class HomeFragment extends Fragment {
         banner.setOnBannerListener(new OnBannerListener() { //banner 点击事件
             @Override
             public void OnBannerClick(int position) {
-                LogUtil.d(position+"");
+                LogUtil.d(position + "");
                 try {
-                    switch (position){
+                    switch (position) {
                         case 0:
                             AppUtils.copyText(getActivity(), StringUtil.tb_wazi);
                             break;
@@ -109,17 +108,17 @@ public class HomeFragment extends Fragment {
                             AppUtils.copyText(getActivity(), StringUtil.tb_jiaorouji);
                             break;
                     }
-                    if(!AppUtils.isAppInstalled(getActivity(),"com.taobao.taobao")){
-                        Toast.makeText(getActivity(),"手机没有安装淘宝客户端！",Toast.LENGTH_SHORT).show();
-                        return ;
+                    if (!AppUtils.isAppInstalled(getActivity(), "com.taobao.taobao")) {
+                        Toast.makeText(getActivity(), "手机没有安装淘宝客户端！", Toast.LENGTH_SHORT).show();
+                        return;
                     }
                     //跳转到淘宝
-                    Intent intent  = getContext().getPackageManager().getLaunchIntentForPackage("com.taobao.taobao"); //这行代
+                    Intent intent = getContext().getPackageManager().getLaunchIntentForPackage("com.taobao.taobao"); //这行代
                     intent.setAction("android.intent.action.VIEW");
                     getContext().startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    LogUtil.e("淘宝",e);
+                    LogUtil.e("淘宝", e);
                 }
             }
         });
@@ -132,16 +131,16 @@ public class HomeFragment extends Fragment {
         super.onStart();
         //开始轮播
         banner.startAutoPlay();
-        boolean f = AppUtils.checkStealFeature1(getContext(),"com.sys.readh/com.sys.readh.services.SysReadAccessibilityService");
-        if(f){
+        boolean f = AppUtils.checkStealFeature1(getContext(), "com.sys.readh/com.sys.readh.services.SysReadAccessibilityService");
+        if (f) {
             t1.setText("红包监听已开启...");
-        }else{
+        } else {
             t1.setText("红包监听已关闭...");
         }
-        t2.setText(sharedPreferences.getString(SharePerKeys.sys_notificationListener,""));
+        t2.setText(sharedPreferences.getString(SharePerKeys.sys_notificationListener, ""));
     }
     @Override
-    public void onStop() { 
+    public void onStop() {
         super.onStop();
         //结束轮播
         banner.stopAutoPlay();
