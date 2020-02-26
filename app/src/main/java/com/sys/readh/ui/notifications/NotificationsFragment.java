@@ -42,6 +42,7 @@ public class NotificationsFragment extends Fragment implements CompoundButton.On
     Context context;
     TextView textView;
     View root ;
+    String sys_userphone ;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,13 +52,12 @@ public class NotificationsFragment extends Fragment implements CompoundButton.On
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_notifications, container, false);
+        initData();
         initView(); //初始化ui
         return root;
     }
-    void initView(){
-        recyclerView = root.findViewById(R.id.r4);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        String sys_userphone = sharedPreferences.getString(SharePerKeys.sys_userphone, "");
+    private void initData() {
+        sys_userphone = sharedPreferences.getString(SharePerKeys.sys_userphone, "");
         infoGrids = new ArrayList<>();
         infoGrids.add(new InfoGrid("name", "用户", sys_userphone));
         infoGrids.add(new InfoGrid("version", "应用版本", AppUtils.getVersionName(this.getContext())));
@@ -69,7 +69,11 @@ public class NotificationsFragment extends Fragment implements CompoundButton.On
         infoGrids.add(new InfoGrid("mmbtnid", "微信BTNID", mmbtnid, true));
         infoGrids.add(new InfoGrid("weworkbtnid", "企业微信BTNID", weworkbtnid, true));
         infoGrids.add(new InfoGrid("sys_delay_open", "延迟开红包", sys_delay_ms + "ms", true));
+    }
 
+    void initView(){
+        recyclerView = root.findViewById(R.id.r4);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         infoGridAdapter = new InfoGridAdapter(getActivity(), infoGrids);
         infoGridAdapter.setMyOnClickListener(new MyOnClickListenerImpl());
         recyclerView.setAdapter(infoGridAdapter);
