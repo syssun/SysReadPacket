@@ -172,7 +172,7 @@ public class NotificationsFragment extends Fragment implements CompoundButton.On
         });
         builder.show();
     }
-    class MyOnClickListenerImpl implements MyOnClickListener {
+    class MyOnClickListenerImpl implements MyOnClickListener<InfoGrid> {
         @Override
         public void itemOnclick(View view, InfoGrid infoGrid) {
             switch (infoGrid.getCode()) {

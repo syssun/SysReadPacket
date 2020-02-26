@@ -2,7 +2,7 @@ package com.sys.readh.adapter.items;
 
 import com.alibaba.fastjson.JSONObject;
 
-public class InfoGrid {
+public class InfoGrid extends  BaseItem{
     private String code;
     private String label;
     private String value;

@@ -1,6 +1,6 @@
 package com.sys.readh.adapter.items;
 
-public class HomeGrid {
+public class HomeGrid extends  BaseItem{
     private Integer id;
     private Integer iamge;
     private String title;

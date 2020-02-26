@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">红包神器</string>
     <string name="title_home">首页</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">我的</string>
+    <string name="title_dashboard">我的</string>
+    <string name="title_notifications">设置</string>
     <string name="accessibility_desc">抢红包神器，帮你快速抢红包，解放双手，享受快人一块！</string>
 
     <string name="sys_notification_keyword">红包</string>

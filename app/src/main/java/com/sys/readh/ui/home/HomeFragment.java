@@ -22,7 +22,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sys.readh.R;
+import com.sys.readh.activitys.SettingsActivity;
 import com.sys.readh.adapter.HomeAdapter;
+import com.sys.readh.adapter.impls.MyOnClickListener;
 import com.sys.readh.adapter.items.HomeGrid;
 import com.sys.readh.loader.GlideImageLoader;
 import com.sys.readh.utils.AppUtils;
@@ -41,11 +43,13 @@ public class HomeFragment extends Fragment {
     HomeAdapter homeGridAdapter;
     TextView t1, t2;
     View root;
+    Context context;
     private SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this.getContext();
         images = new ArrayList<Integer>();
         images.add(R.mipmap.tb_wazi);
         images.add(R.mipmap.tb_kuzi);
@@ -71,6 +75,7 @@ public class HomeFragment extends Fragment {
         homeGrids.add(new HomeGrid(R.mipmap.kaqii, "开启监听", "jianting"));
         homeGrids.add(new HomeGrid(R.mipmap.tongzhi, "开启通知", "tongzhi"));
         homeGridAdapter = new HomeAdapter(getActivity(), homeGrids);
+        homeGridAdapter.setMyOnClickListener(new MyOnClickListenerImpl());
         recyclerView.setAdapter(homeGridAdapter);
         t1 = root.findViewById(R.id.t1);
         t2 = root.findViewById(R.id.t2);
@@ -144,6 +149,31 @@ public class HomeFragment extends Fragment {
         super.onStop();
         //结束轮播
         banner.stopAutoPlay();
+    }
+    //列表点击事件
+    class MyOnClickListenerImpl implements MyOnClickListener<HomeGrid>{
+        @Override
+        public void itemOnclick(View view, HomeGrid h) {
+
+            switch (h.getCtl()){
+                case "tongzhi":
+                    context.startActivity( new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
+                    break ;
+                case "jianting" :
+                    //判断btnid 是否填写
+                    String mmbtnid = sharedPreferences.getString(SharePerKeys.sys_mmbtnid,"");
+                    String weworkbtnid = sharedPreferences.getString(SharePerKeys.sys_weworkbtnid,"");
+                    if("".equals(mmbtnid) && "".equals(weworkbtnid)){
+                        Toast.makeText(context,"请在【我的】中正确填写BTNID",Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                    context.startActivity( new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
+                    break ;
+                case "shezhi" :
+                    context.startActivity(new Intent(context, SettingsActivity.class));
+                    break ;
+            }
+        }
     }
 
 }

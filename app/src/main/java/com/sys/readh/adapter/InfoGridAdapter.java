@@ -1,46 +1,27 @@
 package com.sys.readh.adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.sys.readh.MainActivity;
 import com.sys.readh.R;
-import com.sys.readh.activitys.LoginActivity;
 import com.sys.readh.adapter.impls.MyOnClickListener;
 import com.sys.readh.adapter.items.InfoGrid;
-import com.sys.readh.utils.AppUtils;
-import com.sys.readh.utils.LogUtil;
-import com.sys.readh.utils.SharePerKeys;
-
 import java.util.ArrayList;
-
 public class InfoGridAdapter extends RecyclerView.Adapter<InfoGridAdapter.ViewHoler> {
     Context context;
     TextView tvlable,tvvalue;
     ImageView imageView;
     ArrayList<InfoGrid> infoGrids;
-    MyOnClickListener myOnClickListener;
-    private SharedPreferences sharedPreferences;
+    MyOnClickListener<InfoGrid> myOnClickListener;
     private InfoGridAdapter(){}
     public InfoGridAdapter(Context context, ArrayList<InfoGrid> infoGrids){
         this.context = context;
         this.infoGrids = infoGrids ;
-        sharedPreferences = context.getSharedPreferences("data",Context.MODE_PRIVATE);
     }
     @NonNull
     @Override
@@ -61,14 +42,6 @@ public class InfoGridAdapter extends RecyclerView.Adapter<InfoGridAdapter.ViewHo
                 }
             });
     }
-
-
-    public  void toMain(){
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
-
     @Override
     public int getItemCount() {
         return infoGrids.size();
@@ -77,7 +50,6 @@ public class InfoGridAdapter extends RecyclerView.Adapter<InfoGridAdapter.ViewHo
         this.myOnClickListener = myOnClickListener;
     }
     class ViewHoler extends RecyclerView.ViewHolder{
-
         public ViewHoler(@NonNull View itemView) {
             super(itemView);
             tvlable = itemView.findViewById(R.id.tv_label);
