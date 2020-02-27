@@ -8,13 +8,22 @@
     tools:context=".activitys.MyQrcodeActivity">
     <include layout="@layout/nav_bar"/>
     <Button
+        android:id="@+id/cybutton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="开始扫码"/>
+    <Button
         android:id="@+id/qrbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:onClick="onClick"
-        android:text="开始扫码"/>
+        android:visibility="gone"
+        android:text="zxing开始扫码"/>
     <TextView
         android:id="@+id/qrtext"
         android:layout_width="wrap_content"

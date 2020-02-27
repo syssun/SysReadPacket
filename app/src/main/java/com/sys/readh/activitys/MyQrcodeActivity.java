@@ -2,6 +2,7 @@ package com.sys.readh.activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,14 +19,16 @@ import com.sys.readh.utils.LogUtil;
 import com.sys.readh.utils.PermissionUtils;
 
 public class MyQrcodeActivity extends  BaseActivity {
-    Button button,cybutton;
+    Button button,cybutton,cybutton2;
     TextView textView;
     Context context;
     Intent intent ;
+    Activity activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this.getApplicationContext();
+        activity = this ;
         setContentView(R.layout.activity_my_qrcode);
         initNavBar(true,"扫码",false);
 
@@ -34,8 +37,23 @@ public class MyQrcodeActivity extends  BaseActivity {
     private void initView() {
         button = findViewById(R.id.qrbutton);
         cybutton = findViewById(R.id.cybutton);
+        cybutton2 = findViewById(R.id.cybutton2);
         textView = findViewById(R.id.qrtext);
         cybutton.setVisibility(View.GONE);
+
+        cybutton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (PermissionUtils.isGrantExternalRW(activity, 1)) {
+                    Intent intent = new Intent(activity, QrcodeZbarActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    AppUtils.toastShow(context,"请打开相机和存储权限！");
+                }
+            }
+        });
+
 
         cybutton.setOnClickListener(new View.OnClickListener() {
             @Override
