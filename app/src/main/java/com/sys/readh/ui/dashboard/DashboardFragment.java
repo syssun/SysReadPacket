@@ -1,6 +1,7 @@
 package com.sys.readh.ui.dashboard;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,13 +19,17 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sys.readh.MainActivity;
 import com.sys.readh.R;
+import com.sys.readh.activitys.MyQrcodeActivity;
+import com.sys.readh.activitys.QrcodeActivity;
 import com.sys.readh.adapter.InfoGridAdapter;
 import com.sys.readh.adapter.impls.MyOnClickListener;
 import com.sys.readh.adapter.items.InfoGrid;
 import com.sys.readh.loader.GlideImageLoader;
 import com.sys.readh.ui.notifications.NotificationsFragment;
 import com.sys.readh.utils.AppUtils;
+import com.sys.readh.utils.PermissionUtils;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -76,7 +81,8 @@ public class DashboardFragment extends Fragment {
         public void itemOnclick(View view, InfoGrid infoGrid) {
             switch (infoGrid.getCode()){
                 case "qrcode":
-                    AppUtils.toastShow(context,"this is qrcode");
+                        Intent intent = new Intent(context, MyQrcodeActivity.class);
+                        startActivity(intent);
                     break;
             }
         }

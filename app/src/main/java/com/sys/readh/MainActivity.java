@@ -1,6 +1,9 @@
 package com.sys.readh;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -29,7 +32,5 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
-
-
 
 }
